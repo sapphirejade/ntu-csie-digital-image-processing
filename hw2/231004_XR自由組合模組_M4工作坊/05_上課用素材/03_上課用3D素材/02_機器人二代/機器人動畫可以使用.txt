@@ -1,0 +1,10 @@
+以下動畫可以使用
+
+idle 待機
+speak 說話
+wink 眨眼
+shakehand 招手
+slaver 流口水
+smile 笑臉
+shy 害羞
+running 園地繞圈跑動

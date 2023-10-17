@@ -1,0 +1,1 @@
+﻿{"JudgeDownloadFinish": "True","InteractiveData": { "interactive_title": "Darren_測試專案","EventID": "2174","InteractiveID": "13704","AllTrackIDs": [ "af1819b2540d4527b545b3b5f3ea4747" ] },"default_scene_id": "新場景 (0)","scenes": [ { "scene_id": "新場景 (0)","frame": { "type": "no_frame","tryout_mode": "both","gif_repeat_times": "0" } }],"arEngine": "AR_Foundation","isCdn": "False"}
