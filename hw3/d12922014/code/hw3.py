@@ -25,25 +25,44 @@ Reference
 
 import os
 import cv2
+import matplotlib.pyplot as plt
 from pathlib import Path
 
-# 得到作業所在目錄路徑。換言之，取得 d12922014 資料夾路徑
+# 得到作業所在目錄路徑 (取得 d12922014 資料夾路徑)
 HOMEWORK_DIR_PATH = Path(os.path.dirname(os.path.realpath(__file__))).parent
-# 設定存放圖片結果資料夾路徑。換言之，為 d12922014 資料夾底下的 results
+# 設定存放圖片結果資料夾路徑 (取得 results 資料夾路徑)
 RESULTS_DIR_PATH = HOMEWORK_DIR_PATH.joinpath("results")
-# 設定原始圖片檔案路徑。換言之，為 d12922014 資料夾底下的 origin.jpg
+# 設定原始圖片檔案路徑 (取得 origin.jpg 檔案路徑)
 ORIGIN_JPG_PATH = HOMEWORK_DIR_PATH.joinpath("origin.jpg")
 
 # 程式碼進入點
 if __name__ == "__main__":
-    # 以灰階形式讀取原始圖片
+    # 以灰階形式讀取「原始圖片」
     src = cv2.imread(os.path.abspath(ORIGIN_JPG_PATH), cv2.IMREAD_GRAYSCALE)
-    cv2.imwrite(os.path.abspath(RESULTS_DIR_PATH.joinpath("before.jpg")), src)
-    dst = cv2.equalizeHist(src)
-    cv2.imwrite(os.path.abspath(RESULTS_DIR_PATH.joinpath("after.jpg")), dst)
+    # 以 png 格式儲存「處理前」圖片，以供後續對比
+    cv2.imwrite(os.path.abspath(Path(RESULTS_DIR_PATH, "before.png")), src)
+    # 繪製、儲存並顯示「處理前」histogram
+    fig, ax = plt.subplots()
+    ax.hist(src.ravel(), 256, [0, 256],color='r')
+    plt.savefig(os.path.abspath(Path(RESULTS_DIR_PATH, "before_histogram.png")))
+    plt.show()
 
-    src = cv2.resize(src, None, fx=0.2, fy=0.2)
-    cv2.imshow('Before', src)
-    dst = cv2.resize(dst, None, fx=0.2, fy=0.2)
-    cv2.imshow('After', dst)
-    cv2.waitKey()
+    # 對「原始圖片」進行 histogram equalization 處理
+    dst = cv2.equalizeHist(src)
+    # 以 png 格式儲存「處理後」圖片，以供後續對比
+    cv2.imwrite(os.path.abspath(Path(RESULTS_DIR_PATH, "after.png")), dst)
+    # 繪製、儲存並顯示「處理後」histogram
+    fig, ax = plt.subplots()
+    ax.hist(dst.ravel(), 256, [0, 256],color='r')
+    plt.savefig(os.path.abspath(Path(RESULTS_DIR_PATH, "after_histogram.png")))
+    plt.show()
+
+    # 對「處理後」圖片再次進行 histogram equalization
+    dst2 = cv2.equalizeHist(dst)
+    # 以 png 格式儲存「二次處理後」圖片，以供後續對比
+    cv2.imwrite(os.path.abspath(Path(RESULTS_DIR_PATH, "twice_after.png")), dst2)
+    # 繪製、儲存並顯示「二次處理後」histogram
+    fig, ax = plt.subplots()
+    ax.hist(dst2.ravel(), 256, [0, 256],color='r')
+    plt.savefig(os.path.abspath(Path(RESULTS_DIR_PATH, "twice_after_histogram.png")))
+    plt.show()
